@@ -1,38 +1,49 @@
 package com.FirstProject.SimpleWebApp.Service;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Optional;
 
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.FirstProject.SimpleWebApp.Model.Product;
 
 @Service
 public class ProductService {
 
-    List<Product> products = Arrays.asList(
-        new Product(101,"iphone",50000),
-        new Product(102,"canon camera",70000),
-        new Product(103,"shure mic",10000));
+    // List to hold our products
+    private List<Product> products = new ArrayList<>();
 
-    public List<Product> getProducts(){
+    // Constructor to add some dummy data when the service is created
+    // Constructor to add some dummy data when the service is created
+    public ProductService() {
+        // CORRECT SYNTAX: Just pass the values in the correct order
+        products.add(new Product(101, "Laptop", 75000));
+        products.add(new Product(103, "Mouse", 1200));
+        products.add(new Product(104, "Keyboard", 2500));
+    }
+
+    // Method to get all products
+    public List<Product> getProducts() {
         return products;
-        
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
+    // --- THIS IS THE FULLY CORRECTED METHOD ---
     public Product getProductById(int prodId) {
-        return products.stream()
+        // The stream operations must be chained in a single statement
+        Optional<Product> optionalProduct = products.stream()
                 .filter(p -> p.getProdId() == prodId)
-                .findFirst().get();
-        
+                .findFirst();
+
+        // Check if the product was found. If not, throw an exception
+        // that Spring Boot will automatically convert to a 404 Not Found response.
+        if (optionalProduct.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Product with ID " + prodId + " not found");
+        }
+
+        // If we get here, the product exists, so we can safely call .get()
+        return optionalProduct.get();
     }
-
-    
-
 }

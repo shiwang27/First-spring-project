@@ -4,42 +4,19 @@ import org.springframework.stereotype.Component;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Component
+@Data // This single annotation creates all getters, setters, toString, etc.
+@NoArgsConstructor // Creates the default empty constructor: new Product()
+@AllArgsConstructor // Creates the constructor with all fields: new Product(id, name, price)
 public class Product {
-
     
     private int prodId;
     private String prodName;
     private int price;
 
-    public Product() {
-    }
-
-
-
-    public Product(int prodId, String prodName, int price) {
-        this.prodId = prodId;
-        this.prodName = prodName;
-        this.price = price;
-    }
-    public int getProductId() {
-        return prodId;
-    }
-    public String getProdName() {
-        return prodName;
-    }
-    public int getPrice() {
-        return price;
-    }
-
-
-
-    public int getProdId() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getProdId'");
-    }
-
-    
-
+    // With the Lombok annotations above, you do not need to write
+    // any constructors, getters, or setters yourself.
+    // This code is now clean, correct, and much easier to read.
 }
