@@ -14,15 +14,13 @@ import com.FirstProject.SimpleWebApp.Model.Product;
 public class ProductService {
 
     // List to hold our products
-    private List<Product> products = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
 
-    // Constructor to add some dummy data when the service is created
-    // Constructor to add some dummy data when the service is created
     public ProductService() {
         // CORRECT SYNTAX: Just pass the values in the correct order
         products.add(new Product(101, "Laptop", 75000));
-        products.add(new Product(103, "Mouse", 1200));
-        products.add(new Product(104, "Keyboard", 2500));
+        products.add(new Product(102, "Mouse", 1200));
+        products.add(new Product(103, "Keyboard", 2500));
     }
 
     // Method to get all products
@@ -45,5 +43,9 @@ public class ProductService {
 
         // If we get here, the product exists, so we can safely call .get()
         return optionalProduct.get();
+    }
+
+    public void addProduct(Product prod) {
+        products.add(prod);
     }
 }
