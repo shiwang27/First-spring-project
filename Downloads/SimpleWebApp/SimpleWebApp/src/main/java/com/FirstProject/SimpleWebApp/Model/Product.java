@@ -2,16 +2,20 @@ package com.FirstProject.SimpleWebApp.Model;
 
 import org.springframework.stereotype.Component;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Component
+@Entity
 @Data // This single annotation creates all getters, setters, toString, etc.
 @NoArgsConstructor // Creates the default empty constructor: new Product()
 @AllArgsConstructor // Creates the constructor with all fields: new Product(id, name, price)
 public class Product {
     
+    @Id
     private int prodId;
     private String prodName;
     private int price;
